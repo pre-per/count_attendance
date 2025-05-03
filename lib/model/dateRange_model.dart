@@ -1,20 +1,19 @@
 import 'dart:core';
 
 class DateRange {
-  final String startDate;
-  final String endDate;
+  DateTime startDate;
+  DateTime endDate;
 
-  DateRange({String? startDate, String? endDate})
-    : startDate =
-          startDate ?? DateTime.now().subtract(Duration(days: 365)).toString(),
-      endDate = endDate ?? DateTime.now().toString();
+  DateRange({DateTime? startDate, DateTime? endDate})
+    : startDate = startDate ?? DateTime.now(),
+      endDate = endDate ?? DateTime.now();
 
-  DateRange copyWith({String? startDate, String? endDate}) {
+  DateRange copyWith({DateTime? startDate, DateTime? endDate}) {
     return DateRange(
       startDate: startDate ?? this.startDate,
       endDate: endDate ?? this.endDate,
     );
   }
 
-  bool get isValid => DateTime.parse(startDate).isBefore(DateTime.parse(endDate));
+  bool get isValid => startDate.isBefore(endDate);
 }

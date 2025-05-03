@@ -1,4 +1,7 @@
 import 'dart:io';
+import 'package:count_attendance/model/dateRange_model.dart';
+import 'package:count_attendance/provider/classList_provider.dart';
+import 'package:count_attendance/provider/date_state_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:desktop_drop/desktop_drop.dart';
@@ -77,26 +80,29 @@ class _DropzoneWidgetState extends ConsumerState<DropzoneWidget> {
             color: _dragging ? Colors.green[50] : Colors.white,
             child: Center(
               child:
-              droppedFile == null
-                  ? Text(
-                '파일을 드래그하거나 클릭하세요',
-                style: TextStyle(
-                  fontSize: 20.0,
-                  fontWeight: FontWeight.w600,
-                ),
-              ) // 드래그 하기 전 띄워지는 메시지
-                  : Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(Icons.task_outlined, size: 50.0),
-                  const SizedBox(height: 15.0),
-                  Text(
-                    '선택된 파일: ${droppedFile.path.split(Platform.pathSeparator).last}',
-                    style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
-                    textAlign: TextAlign.center,
-                  ),
-                ],
-              ), // 드래그 한 후 띄워지는 메시지
+                  droppedFile == null
+                      ? Text(
+                        '파일을 드래그하거나 클릭하세요',
+                        style: TextStyle(
+                          fontSize: 20.0,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ) // 드래그 하기 전 띄워지는 메시지
+                      : Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(Icons.task_outlined, size: 50.0),
+                          const SizedBox(height: 15.0),
+                          Text(
+                            '선택된 파일: ${droppedFile.path.split(Platform.pathSeparator).last}',
+                            style: TextStyle(
+                              fontSize: 18.0,
+                              fontWeight: FontWeight.bold,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                        ],
+                      ), // 드래그 한 후 띄워지는 메시지
             ),
           ),
         ),

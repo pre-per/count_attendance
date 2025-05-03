@@ -1,10 +1,13 @@
 import 'package:count_attendance/model/class_model.dart';
-import 'package:count_attendance/widget/dragzone_widget.dart';
+import 'package:count_attendance/provider/date_state_provider.dart';
+import 'package:count_attendance/widget/dropzone_widget.dart';
 import 'package:excel/excel.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final classListProvider = FutureProvider<List<Class>>((ref) async {
   final file = ref.watch(fileProvider);
+  final dateprovider = ref.watch(dateProvider);
+  final dateNotifier = ref.read(dateProvider.notifier);
 
   if (file == null) return [];
 
@@ -26,7 +29,7 @@ final classListProvider = FutureProvider<List<Class>>((ref) async {
   // 헤더에서 이름, 날짜, 사람 수 열 찾기
   // ------------------------
 
-  final header = rows.first;
+  final header = rows[1];
   int nameIdx = -1;
   int dateIdx = -1;
   int peopleIdx = -1;
@@ -53,14 +56,15 @@ final classListProvider = FutureProvider<List<Class>>((ref) async {
 
   List<Class> classes = [];
 
-  for (int i = 1; i < rows.length; i++) {
+  for (int i = 2; i < rows.length; i++) {
     final row = rows[i];
+    final date = DateTime.parse(row[dateIdx]?.value?.toString() ?? DateTime(2000,1,1).toString());
 
     classes.add(
       Class(
         name: row[nameIdx]?.value?.toString() ?? 'Unknown',
-        date: row[dateIdx]?.value?.toString() ?? 'Unknown',
-        peopleNum: row[peopleIdx] as int? ?? -1,
+        date: date,
+        peopleNum: int.tryParse(row[peopleIdx]?.value?.toString() ?? '') ?? -1,
       ),
     );
   }
