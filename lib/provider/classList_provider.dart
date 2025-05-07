@@ -1,13 +1,10 @@
 import 'package:count_attendance/model/class_model.dart';
-import 'package:count_attendance/provider/date_state_provider.dart';
 import 'package:count_attendance/widget/dropzone_widget.dart';
 import 'package:excel/excel.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final classListProvider = FutureProvider<List<Class>>((ref) async {
   final file = ref.watch(fileProvider);
-  final dateprovider = ref.watch(dateProvider);
-  final dateNotifier = ref.read(dateProvider.notifier);
 
   if (file == null) return [];
 
@@ -68,6 +65,8 @@ final classListProvider = FutureProvider<List<Class>>((ref) async {
       ),
     );
   }
+
+  classes.sort((a, b) => a.date.compareTo(b.date));
 
   return classes;
 });
