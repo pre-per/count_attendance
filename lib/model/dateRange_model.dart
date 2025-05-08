@@ -5,7 +5,7 @@ class DateRange {
   DateTime endDate;
 
   DateRange({DateTime? startDate, DateTime? endDate})
-    : startDate = startDate ?? DateTime.now(),
+    : startDate = startDate ?? DateTime.now().subtract(Duration(days: 1000)),
       endDate = endDate ?? DateTime.now();
 
   DateRange copyWith({DateTime? startDate, DateTime? endDate}) {

@@ -38,7 +38,7 @@ class MyApp extends StatelessWidget {
             fontSize: 20.0,
           ),
         ),
-        // textTheme: GoogleFonts.notoSansKrTextTheme(),
+        textTheme: GoogleFonts.notoSansKrTextTheme(),
       ),
       home: MainScreen(),
     );
@@ -52,15 +52,15 @@ class MainScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.symmetric(vertical: 30.0, horizontal: 50.0),
         child: Material(
-          color: Colors.white,
+          color: Colors.transparent,
           child: ListView(
             children: [
               DropzoneWidget(),
-              const SizedBox(height: 20.0),
+              const SizedBox(height: 30.0),
               DatepickWidget(),
-              const SizedBox(height: 20.0),
+              const SizedBox(height: 30.0),
               AttendancelistWidget(),
             ],
           ),

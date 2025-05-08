@@ -9,11 +9,17 @@ final classListInDateRangeProvider = Provider<List<Class>>((ref) {
 
   return classListAsync.maybeWhen(
     data: (classList) {
-      return classList.where(
-        (c) =>
-            c.date.isAfter(dateRangeProvider.startDate) &&
-            c.date.isBefore(dateRangeProvider.endDate),
-      ).toList();
+      return classList
+          .where(
+            (c) =>
+                c.date.isAfter(
+                  dateRangeProvider.startDate.subtract(Duration(days: 1)),
+                ) &&
+                c.date.isBefore(
+                  dateRangeProvider.endDate.add(Duration(days: 1)),
+                ),
+          )
+          .toList();
     },
     orElse: () => [],
   );

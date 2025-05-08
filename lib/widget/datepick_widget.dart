@@ -17,6 +17,7 @@ class DatepickWidget extends ConsumerWidget {
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         SelectDateRow(
+          title: '시작 날짜',
           date: startDate,
           onPressed: () async {
             final pickedDate = await showDatePicker(
@@ -31,7 +32,8 @@ class DatepickWidget extends ConsumerWidget {
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
                     content: Text(
-                      '시작일이 ${DateFormat('yyyy-MM-dd').format(pickedDate)}로 변경되었습니다!',
+                      '시작일이 ${DateFormat('yyyy-MM-dd').format(
+                          pickedDate)}로 변경되었습니다!',
                     ),
                     backgroundColor: Colors.green,
                   ),
@@ -47,8 +49,8 @@ class DatepickWidget extends ConsumerWidget {
             }
           },
         ),
-        Text('-', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600)),
         SelectDateRow(
+          title: '마지막 날짜',
           date: endDate,
           onPressed: () async {
             final pickedDate = await showDatePicker(
@@ -63,7 +65,8 @@ class DatepickWidget extends ConsumerWidget {
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
                     content: Text(
-                      '종료일이 ${DateFormat('yyyy-MM-dd').format(pickedDate)}로 변경되었습니다!',
+                      '종료일이 ${DateFormat('yyyy-MM-dd').format(
+                          pickedDate)}로 변경되었습니다!',
                     ),
                     backgroundColor: Colors.green,
                   ),
@@ -85,20 +88,49 @@ class DatepickWidget extends ConsumerWidget {
 }
 
 class SelectDateRow extends StatelessWidget {
+  final String title;
   final DateTime date;
   final Function() onPressed;
 
-  const SelectDateRow({super.key, required this.date, required this.onPressed});
+  const SelectDateRow({
+    super.key,
+    required this.date,
+    required this.onPressed,
+    required this.title,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return Row(
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          DateFormat('yyyy-MM-dd').format(date),
-          style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+          '  $title', style: TextStyle(fontWeight: FontWeight.w600, fontSize: 18.0),),
+        const SizedBox(height: 10),
+        InkWell(
+          onTap: onPressed,
+          borderRadius: BorderRadius.circular(8.0),
+          child: Ink(
+            decoration: BoxDecoration(
+              color: Colors.yellow[50],
+              borderRadius: BorderRadius.circular(8.0),
+              border: Border.all(color: Colors.grey, width: 0.3),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 25),
+              child: Row(
+                children: [
+                  Text(
+                    DateFormat('yyyy-MM-dd').format(date),
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
+                  ),
+                  const SizedBox(width: 20),
+                  Icon(Icons.calendar_month, color: Colors.grey[700]),
+                ],
+              ),
+            ),
+          ),
         ),
-        IconButton(onPressed: onPressed, icon: Icon(Icons.calendar_month)),
       ],
     );
   }
