@@ -33,6 +33,7 @@ class AttendancelistWidget extends ConsumerWidget {
                     endDate: classList.last.date,
                   ),
                 );
+                ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('선택 가능한 전체 범위의 날짜로 변경되었습니다!'),backgroundColor: Colors.green,));
               },
               child: Ink(
                 child: Text(
@@ -58,15 +59,17 @@ class AttendancelistWidget extends ConsumerWidget {
                     (context, index) {
                   final name = listEntries[index].key;
                   final sum = listEntries[index].value;
+                  final classList = listInRange.where((c) => c.name == name).toList();
 
                   return SumListInkWell(
                     name: name,
                     peopleNum: sum,
+                    length: classList.length,
                     onTap: () {
                       Navigator.of(context).push(MaterialPageRoute(builder: (
                           _) =>
                           ClassDetailScreen(title: name, sum: sum,
-                              classList: listInRange.where((c) => c.name == name).toList(), dateRange: dateprovider,)));
+                              classList: classList, dateRange: dateprovider,)));
                     },
                   );
                 },
@@ -84,12 +87,13 @@ class AttendancelistWidget extends ConsumerWidget {
 class SumListInkWell extends StatelessWidget {
   final String name;
   final int peopleNum;
+  final int length;
   final Function() onTap;
 
   const SumListInkWell({
     super.key,
     required this.name,
-    required this.peopleNum, required this.onTap,
+    required this.peopleNum, required this.onTap, required this.length,
   });
 
   @override
@@ -104,7 +108,7 @@ class SumListInkWell extends StatelessWidget {
           child: Row(
             children: [
               Expanded(
-                flex: 1,
+                flex: 3,
                 child: Text(
                   name,
                   softWrap: true,
@@ -112,10 +116,19 @@ class SumListInkWell extends StatelessWidget {
                 ),
               ),
               Expanded(
+                flex: 2,
+                child: Center(
+                  child: Text(
+                    '${peopleNum.toString()}명',
+                    style: TextStyle(fontWeight: FontWeight.w600, fontSize: 18),
+                  ),
+                ),
+              ),
+              Expanded(
                 flex: 1,
                 child: Center(
                   child: Text(
-                    peopleNum.toString(),
+                    '${length.toString()}건',
                     style: TextStyle(fontWeight: FontWeight.w600, fontSize: 18),
                   ),
                 ),

@@ -34,6 +34,11 @@ class ClassDetailScreen extends StatelessWidget {
         ),
         actions: [
           Text(
+            '총 개수: ${classList.length}건',
+            style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.w600),
+          ),
+          const SizedBox(width: 20),
+          Text(
             '합계: $sum명',
             style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.w600),
           ),
@@ -102,7 +107,7 @@ class ClassListDetailsWidget extends StatelessWidget {
               Expanded(
                 flex: 1,
                 child: Text(
-                  peopleNum.toString(),
+                  '${peopleNum.toString()}명',
                   style: TextStyle(fontSize: 18.0),
                 ),
               ),
