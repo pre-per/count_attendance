@@ -34,6 +34,11 @@ class ClassDetailScreen extends StatelessWidget {
         ),
         actions: [
           Text(
+            '평균: ${(sum / classList.length).toStringAsFixed(2)}명',
+            style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.w600),
+          ),
+          const SizedBox(width: 20),
+          Text(
             '총 개수: ${classList.length}건',
             style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.w600),
           ),
@@ -95,20 +100,20 @@ class ClassListDetailsWidget extends StatelessWidget {
             children: [
               Expanded(
                 flex: 2,
-                child: Text(title, style: TextStyle(fontSize: 18.0)),
+                child: Text(title, style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.w600)),
               ),
               Expanded(
                 flex: 2,
                 child: Text(
                   DateFormat('yyyy-MM-dd').format(date),
-                  style: TextStyle(fontSize: 18.0),
+                  style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.w600),
                 ),
               ),
               Expanded(
                 flex: 1,
                 child: Text(
                   '${peopleNum.toString()}명',
-                  style: TextStyle(fontSize: 18.0),
+                  style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.w600),
                 ),
               ),
             ],
